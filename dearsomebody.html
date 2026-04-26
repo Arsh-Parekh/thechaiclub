@@ -1,174 +1,356 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Dear Somebody — The Chai Club</title>
-  <link href="https://fonts.googleapis.com/css2?family=EB+Garamond:wght@400;700&family=Sacramento&family=Crimson+Text:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Libre+Baskerville:ital@0;1&family=IM+Fell+English+SC&display=swap">
   <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
     :root {
-      --background-color: #2e261f;
-      --primary-color: #fefcf9;
-      --accent-color: #cba974;
-      --border-color: #a28e7a;
-      --card-bg: #3c342d;
-      --texture: url('https://www.transparenttextures.com/patterns/french-paper.png');
+      --chai-dark: #2b1f0e;
+      --chai-brown: #3c2a14;
+      --chai-mid: #6b4c2a;
+      --chai-gold: #c9954a;
+      --chai-cream: #f5ead8;
+      --chai-parchment: #fdf6ec;
+      --chai-text: #2b1f0e;
+      --chai-muted: #7a5c3a;
+      --chai-accent: #8b3a1e;
     }
 
     body {
-      margin: 0;
-      padding: 0;
-      background-color: var(--background-color);
-      background-image: var(--texture);
-      color: var(--primary-color);
-      font-family: 'Crimson Text', serif;
+      font-family: 'Cormorant Garamond', Georgia, serif;
+      background: var(--chai-parchment);
+      color: var(--chai-text);
+      font-size: 18px;
+      line-height: 1.7;
+      overflow-x: hidden;
     }
 
-    header {
-      padding: 4rem 2rem 3rem;
-      text-align: center;
-      background-color: var(--background-color);
-      border-bottom: 3px dashed var(--border-color);
-    }
-
-    header h1 {
-      font-family: 'Sacramento', cursive;
-      font-size: 4rem;
-      margin-bottom: 0.5rem;
-      color: var(--accent-color);
-    }
-
-    header p {
-      max-width: 700px;
-      margin: 0 auto;
-      font-size: 1.2rem;
-      font-style: italic;
-      color: var(--primary-color);
-    }
-
+    /* NAV */
     nav {
-      text-align: center;
-      margin-bottom: 2rem;
-      padding-top: 0.5rem;
+      background: var(--chai-dark);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+
+    .nav-inner {
+      max-width: 900px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0 1rem;
+      overflow-x: auto;
     }
 
     nav a {
-      color: var(--primary-color);
-      margin: 0 1.2rem;
+      font-family: 'IM Fell English SC', serif;
+      font-size: 0.78rem;
+      color: rgba(245, 234, 216, 0.6);
       text-decoration: none;
+      padding: 1rem 1.4rem;
+      letter-spacing: 0.08em;
+      border-bottom: 2px solid transparent;
+      transition: color 0.2s, border-color 0.2s;
+      white-space: nowrap;
+    }
+
+    nav a:hover { color: var(--chai-gold); border-bottom-color: var(--chai-gold); }
+    nav a.active { color: var(--chai-gold); border-bottom-color: var(--chai-gold); }
+
+    /* PAGE HEADER */
+    .page-header {
+      background: var(--chai-dark);
+      text-align: center;
+      padding: 5rem 2rem 4rem;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .page-header::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(ellipse 70% 60% at 50% 100%, rgba(163, 99, 40, 0.3) 0%, transparent 70%);
+      pointer-events: none;
+    }
+
+    .page-header .section-label {
+      font-family: 'IM Fell English SC', serif;
+      font-size: 0.72rem;
+      letter-spacing: 0.4em;
+      color: var(--chai-gold);
+      opacity: 0.7;
+      margin-bottom: 1.5rem;
+    }
+
+    .page-header h1 {
+      font-family: 'IM Fell English SC', serif;
+      font-size: clamp(2.5rem, 6vw, 5rem);
       font-weight: 400;
-      font-size: 1rem;
-      font-family: 'EB Garamond', serif;
+      color: var(--chai-cream);
+      letter-spacing: 0.04em;
+      line-height: 1.1;
+      margin-bottom: 1.25rem;
     }
 
-    nav a:hover {
-      color: var(--accent-color);
+    .hero-divider {
+      width: 50px;
+      height: 1px;
+      background: var(--chai-gold);
+      margin: 0 auto 1.5rem;
+      opacity: 0.5;
     }
 
+    .page-header p {
+      font-family: 'Libre Baskerville', serif;
+      font-size: 0.88rem;
+      font-style: italic;
+      color: rgba(201, 149, 74, 0.8);
+      max-width: 520px;
+      margin: 0 auto;
+      line-height: 1.9;
+    }
+
+    /* LETTER ARCHIVE */
     .letter-archive {
-      max-width: 800px;
-      margin: 2rem auto 4rem;
-      padding: 2rem;
-      background-color: rgba(255, 255, 255, 0.025);
-      border: 2px dashed var(--border-color);
-      border-radius: 14px;
+      max-width: 720px;
+      margin: 0 auto;
+      padding: 5rem 2rem;
+    }
+
+    .archive-label {
+      font-family: 'IM Fell English SC', serif;
+      font-size: 0.68rem;
+      letter-spacing: 0.35em;
+      color: var(--chai-accent);
+      margin-bottom: 3rem;
+      text-align: center;
+      display: block;
     }
 
     .letter {
-  background-color: var(--card-bg);
-  border: 1px solid var(--border-color);
-  border-radius: 16px;
-  padding: 2rem 2rem 3.5rem; /* Add extra bottom padding */
-  margin: 2rem 1rem;
-  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
-  transition: transform 0.3s, max-height 0.4s ease;
-  overflow: hidden;
-  max-height: 220px; /* Slightly increased */
-  position: relative;
-}
+      border-top: 1px solid rgba(107, 76, 42, 0.18);
+      padding: 2.5rem 0;
+      position: relative;
+    }
 
-    .letter:hover {
-      transform: translateY(-5px);
+    .letter:last-child {
+      border-bottom: 1px solid rgba(107, 76, 42, 0.18);
+    }
+
+    .letter-number {
+      font-family: 'IM Fell English SC', serif;
+      font-size: 0.65rem;
+      letter-spacing: 0.3em;
+      color: var(--chai-gold);
+      opacity: 0.6;
+      margin-bottom: 0.75rem;
     }
 
     .letter h2 {
-      font-family: 'Sacramento', cursive;
-      font-size: 2rem;
-      margin-bottom: 1rem;
-      color: var(--accent-color);
-    }
-
-    .letter p {
-      font-size: 1.1rem;
-      line-height: 1.7;
-      margin: 0;
-    }
-
-    .letter.expanded {
-      max-height: 1000px;
-    }
-
-    .read-more {
-      display: block;
-      margin-top: 1rem;
-      color: var(--accent-color);
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.6rem;
+      font-weight: 300;
       font-style: italic;
-      cursor: pointer;
-      font-size: 0.95rem;
+      color: var(--chai-dark);
+      margin-bottom: 1.25rem;
+      line-height: 1.3;
     }
 
-    footer {
+    .letter-body {
+      font-family: 'Libre Baskerville', serif;
+      font-size: 0.88rem;
+      line-height: 2;
+      color: var(--chai-muted);
+      overflow: hidden;
+      max-height: 5.5rem;
+      transition: max-height 0.5s ease;
+      position: relative;
+    }
+
+    .letter-body.expanded {
+      max-height: 600px;
+    }
+
+    .letter-body:not(.expanded)::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      height: 2.5rem;
+      background: linear-gradient(transparent, var(--chai-parchment));
+    }
+
+    .read-toggle {
+      display: inline-block;
+      margin-top: 1.25rem;
+      font-family: 'IM Fell English SC', serif;
+      font-size: 0.7rem;
+      letter-spacing: 0.12em;
+      color: var(--chai-accent);
+      cursor: pointer;
+      border-bottom: 1px solid rgba(139, 58, 30, 0.3);
+      padding-bottom: 1px;
+      background: none;
+      border-top: none;
+      border-left: none;
+      border-right: none;
+      transition: border-color 0.2s;
+    }
+
+    .read-toggle:hover {
+      border-bottom-color: var(--chai-accent);
+    }
+
+    /* SUBMIT SECTION */
+    .section-submit {
+      background: var(--chai-brown);
       text-align: center;
-      font-size: 0.85rem;
-      color: #aaa;
-      padding: 2.5rem 1rem;
+      padding: 5rem 2rem;
+    }
+
+    .section-submit .section-label {
+      font-family: 'IM Fell English SC', serif;
+      font-size: 0.68rem;
+      letter-spacing: 0.35em;
+      color: var(--chai-gold);
+      opacity: 0.8;
+      margin-bottom: 1.5rem;
+    }
+
+    .section-submit h2 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(1.8rem, 4vw, 3rem);
+      font-weight: 300;
+      font-style: italic;
+      color: var(--chai-cream);
+      margin-bottom: 1.25rem;
+    }
+
+    .section-submit p {
+      font-family: 'Libre Baskerville', serif;
+      font-size: 0.83rem;
+      font-style: italic;
+      color: rgba(245, 234, 216, 0.55);
+      max-width: 460px;
+      margin: 0 auto 2.5rem;
+      line-height: 1.9;
+    }
+
+    .pill-btn {
+      display: inline-block;
+      padding: 0.65rem 2.2rem;
+      border: 1px solid rgba(201, 149, 74, 0.5);
+      color: var(--chai-gold);
+      font-family: 'IM Fell English SC', serif;
+      font-size: 0.75rem;
+      letter-spacing: 0.12em;
+      text-decoration: none;
+      border-radius: 30px;
+      transition: background 0.25s, color 0.25s, border-color 0.25s;
+    }
+
+    .pill-btn:hover {
+      background: rgba(201, 149, 74, 0.12);
+      border-color: var(--chai-gold);
+      color: var(--chai-cream);
+    }
+
+    /* FOOTER */
+    footer {
+      background: var(--chai-dark);
+      border-top: 1px solid rgba(201, 149, 74, 0.1);
+      color: rgba(245, 234, 216, 0.35);
+      text-align: center;
+      padding: 2rem 1rem;
+      font-family: 'IM Fell English SC', serif;
+      font-size: 0.7rem;
+      letter-spacing: 0.12em;
     }
   </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav>
+    <div class="nav-inner">
+      <a href="index.html">The Chai Club</a>
+      <a href="symposiums.html">Symposiums</a>
+      <a href="dearsomebody.html" class="active">Dear Somebody</a>
+      <a href="reflections.html">Reflections</a>
+      <a href="fragments.html">Fragments</a>
+    </div>
+  </nav>
+
+  <!-- PAGE HEADER -->
+  <div class="page-header">
+    <div class="section-label">The Chai Club</div>
+    <h1>Dear Somebody</h1>
+    <div class="hero-divider"></div>
+    <p>Anonymous letters — tender, reflective, and unfiltered. An open archive of voices that long to be heard.</p>
+  </div>
+
+  <!-- LETTERS -->
+  <section class="letter-archive">
+    <span class="archive-label">The Archive</span>
+
+    <div class="letter">
+      <div class="letter-number">Letter No. 01</div>
+      <h2>To the one I never said goodbye to</h2>
+      <div class="letter-body" id="letter-1">
+        I never got to say goodbye. The room was full, yet somehow, I've never felt more alone. If you're out there, know this — I carry your silence like an heirloom. I still replay our last conversation over and over in my mind, hoping to catch a trace of what you were trying to say, but couldn't. And now I write to you here, not to fill the silence, but to honour it.
+      </div>
+      <button class="read-toggle" data-target="letter-1">Read more</button>
+    </div>
+
+    <div class="letter">
+      <div class="letter-number">Letter No. 02</div>
+      <h2>To the laugh I'm starting to forget</h2>
+      <div class="letter-body" id="letter-2">
+        Sometimes I forget the sound of your laugh. And that terrifies me. Not because I don't want to remember — but because I know memory isn't meant to be permanent. Only cherished. What haunts me isn't the forgetting, it's the realization that I'm the only one left remembering. That this tender thread between us lives only in me now, fraying at the edges.
+      </div>
+      <button class="read-toggle" data-target="letter-2">Read more</button>
+    </div>
+
+    <div class="letter">
+      <div class="letter-number">Letter No. 03</div>
+      <h2>To the version of you I still love</h2>
+      <div class="letter-body" id="letter-3">
+        I wrote this under the amber light of a borrowed desk lamp, listening to a playlist you'd probably hate. But this letter isn't for you. It's for the version of you I still love. The one who held my gaze too long in the stairwell. The one who left mid-sentence and took the warmth of the evening with him. I write because I never did say what I should have. And maybe that's what this space is for.
+      </div>
+      <button class="read-toggle" data-target="letter-3">Read more</button>
+    </div>
+
+  </section>
+
+  <!-- SUBMIT -->
+  <section class="section-submit">
+    <div class="section-label">Write to Someone</div>
+    <h2>Have a letter of your own?</h2>
+    <p>Dear Somebody is an open archive. If you have something to say to someone — anonymously, honestly, without explanation — we'd be honoured to hold it.</p>
+    <a href="mailto:hello@thechaiclub.org" class="pill-btn">Submit a letter</a>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <p>&copy; 2025 The Chai Club &nbsp;·&nbsp; All rights reserved</p>
+  </footer>
+
   <script>
-    document.addEventListener('DOMContentLoaded', function () {
-      document.querySelectorAll('.read-more').forEach(btn => {
-        btn.addEventListener('click', function () {
-          const letter = this.closest('.letter');
-          letter.classList.toggle('expanded');
-          this.textContent = letter.classList.contains('expanded') ? 'Read less' : 'Read more';
-        });
+    document.querySelectorAll('.read-toggle').forEach(btn => {
+      btn.addEventListener('click', function () {
+        const target = document.getElementById(this.dataset.target);
+        target.classList.toggle('expanded');
+        this.textContent = target.classList.contains('expanded') ? 'Read less' : 'Read more';
       });
     });
   </script>
-</head>
-<body>
-  <header>
-    <nav>
-      <a href="index.html">The Chai Club</a>
-      <a href="symposiums.html">Symposiums</a>
-      <a href="dearsomebody.html">Dear Somebody</a>
-      <a href="reflections.html">Reflections</a>
-      <a href="fragments.html">Fragments</a>
-    </nav>
-    <h1>Dear Somebody</h1>
-    <p>A series within <em>The Chai Club</em> offering a space for anonymous letters — tender, reflective, and unfiltered. An open archive of voices that long to be heard.</p>
-  </header>
 
-  <section class="letter-archive">
-    <div class="letter">
-      <h2>Letter #01</h2>
-      <p>I never got to say goodbye. The room was full, yet somehow, I’ve never felt more alone. If you’re out there, know this — I carry your silence like an heirloom. I still replay our last conversation over and over in my mind, hoping to catch a trace of what you were trying to say, but couldn't. And now I write to you here, not to fill the silence, but to honour it.</p>
-      <span class="read-more">Read more</span>
-    </div>
-    <div class="letter">
-      <h2>Letter #02</h2>
-      <p>Sometimes I forget the sound of your laugh. And that terrifies me. Not because I don’t want to remember — but because I know memory isn’t meant to be permanent. Only cherished. What haunts me isn’t the forgetting, it’s the realization that I’m the only one left remembering. That this tender thread between us lives only in me now, fraying at the edges.</p>
-      <span class="read-more">Read more</span>
-    </div>
-    <div class="letter">
-      <h2>Letter #03</h2>
-      <p>I wrote this under the amber light of a borrowed desk lamp, listening to a playlist you’d probably hate. But this letter isn’t for you. It’s for the version of you I still love. The one who held my gaze too long in the stairwell. The one who left mid-sentence and took the warmth of the evening with him. I write because I never did say what I should have. And maybe that’s what this space is for.</p>
-      <span class="read-more">Read more</span>
-    </div>
-  </section>
-
-  <footer>
-    &copy; 2025 The Chai Club — All rights reserved.
-  </footer>
 </body>
 </html>

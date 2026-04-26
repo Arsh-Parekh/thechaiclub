@@ -29,7 +29,6 @@
       overflow-x: hidden;
     }
 
-    /* HERO */
     .hero {
       height: 100vh;
       display: flex;
@@ -111,7 +110,6 @@
       50% { transform: translateY(8px); opacity: 0.9; }
     }
 
-    /* NAV */
     nav {
       background: var(--chai-cream);
       border-bottom: 1px solid rgba(107, 76, 42, 0.2);
@@ -145,7 +143,6 @@
     nav a:hover { color: var(--chai-accent); border-bottom-color: var(--chai-accent); }
     nav a.active { color: var(--chai-accent); border-bottom-color: var(--chai-accent); }
 
-    /* DEAR SOMEBODY */
     .section-dear {
       background: var(--chai-brown);
       color: var(--chai-cream);
@@ -200,7 +197,6 @@
       color: var(--chai-cream);
     }
 
-    /* FEATURED */
     .section-featured {
       max-width: 900px;
       margin: 0 auto;
@@ -276,7 +272,6 @@
       margin: 2.5rem 0;
     }
 
-    /* FOOTER */
     footer {
       background: var(--chai-dark);
       color: rgba(245, 234, 216, 0.35);
@@ -287,7 +282,6 @@
       letter-spacing: 0.12em;
     }
 
-    /* RESPONSIVE */
     @media (max-width: 640px) {
       .article-row { grid-template-columns: 1fr; gap: 2rem 0; }
       .article-divider-v { display: none; }
@@ -298,7 +292,6 @@
 </head>
 <body>
 
-  <!-- HERO -->
   <section class="hero">
     <div class="hero-ornament">est. 2025</div>
     <h1>The Chai Club</h1>
@@ -308,20 +301,16 @@
     <div class="scroll-arrow">↓</div>
   </section>
 
-  <!-- NAV -->
   <nav>
     <div class="nav-inner">
-     <a href="index.html" class="active">The Chai Club</a>
-<a href="writings.html">Writings</a>
-<a href="symposiums.html">Symposiums</a>
-<a href="dearsomebody.html">Dear Somebody</a>
-<a href="fragments.html">Fragments</a>
+      <a href="index.html" class="active">The Chai Club</a>
+      <a href="writings.html">Writings</a>
+      <a href="symposiums.html">Symposiums</a>
+      <a href="dearsomebody.html">Dear Somebody</a>
+      <a href="fragments.html">Fragments</a>
     </div>
   </nav>
 
-  
-
-  <!-- DEAR SOMEBODY -->
   <section class="section-dear">
     <div class="section-label">A Series Within</div>
     <h2>Dear Somebody</h2>
@@ -329,19 +318,18 @@
     <a href="dearsomebody.html" class="pill-btn">Read the Letters</a>
   </section>
 
-  <!-- FEATURED ARTICLES -->
   <section class="section-featured">
     <div class="section-label">From the Archive</div>
     <div class="article-row">
       <div class="article-item">
-        <div class="article-tag">Reflections</div>
+        <div class="article-tag">Memory</div>
         <h3>The Tenderness of Collage: Collecting as a Political Gesture</h3>
         <p>A reflection on collecting, archiving, and the intimacy of building memory through fragments. What we save says something about what we long for.</p>
         <a class="text-link" href="article1.html">Read →</a>
       </div>
       <div class="article-divider-v"></div>
       <div class="article-item">
-        <div class="article-tag">Fragments</div>
+        <div class="article-tag">Identity</div>
         <h3>Notes on Belonging: From Diaspora to Dinner Table</h3>
         <p>Tracing how food rituals, smells, and kitchen stories help reconstruct identity across generations and oceans.</p>
         <a class="text-link" href="article2.html">Read →</a>
@@ -353,7 +341,6 @@
     </div>
   </section>
 
-  <!-- FOOTER -->
   <footer>
     <p>&copy; 2025 The Chai Club &nbsp;·&nbsp; All rights reserved</p>
   </footer>

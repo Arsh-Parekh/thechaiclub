@@ -1,0 +1,440 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Symposiums — The Chai Club</title>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Libre+Baskerville:ital@0;1&family=IM+Fell+English+SC&display=swap">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --chai-dark: #2b1f0e;
+      --chai-brown: #3c2a14;
+      --chai-mid: #6b4c2a;
+      --chai-gold: #c9954a;
+      --chai-cream: #f5ead8;
+      --chai-parchment: #fdf6ec;
+      --chai-text: #2b1f0e;
+      --chai-muted: #7a5c3a;
+      --chai-accent: #8b3a1e;
+    }
+
+    body {
+      font-family: 'Cormorant Garamond', Georgia, serif;
+      background: var(--chai-parchment);
+      color: var(--chai-text);
+      font-size: 18px;
+      line-height: 1.7;
+      overflow-x: hidden;
+    }
+
+    /* NAV */
+    nav {
+      background: var(--chai-dark);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+
+    .nav-inner {
+      max-width: 900px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0 1rem;
+      overflow-x: auto;
+    }
+
+    nav a {
+      font-family: 'IM Fell English SC', serif;
+      font-size: 0.78rem;
+      color: rgba(245, 234, 216, 0.6);
+      text-decoration: none;
+      padding: 1rem 1.4rem;
+      letter-spacing: 0.08em;
+      border-bottom: 2px solid transparent;
+      transition: color 0.2s, border-color 0.2s;
+      white-space: nowrap;
+    }
+
+    nav a:hover { color: var(--chai-gold); border-bottom-color: var(--chai-gold); }
+    nav a.active { color: var(--chai-gold); border-bottom-color: var(--chai-gold); }
+
+    /* PAGE HEADER */
+    .page-header {
+      background: var(--chai-dark);
+      text-align: center;
+      padding: 5rem 2rem 4rem;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .page-header::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(ellipse 70% 60% at 50% 100%, rgba(163, 99, 40, 0.3) 0%, transparent 70%);
+      pointer-events: none;
+    }
+
+    .page-header .section-label {
+      font-family: 'IM Fell English SC', serif;
+      font-size: 0.72rem;
+      letter-spacing: 0.4em;
+      color: var(--chai-gold);
+      opacity: 0.7;
+      margin-bottom: 1.5rem;
+    }
+
+    .page-header h1 {
+      font-family: 'IM Fell English SC', serif;
+      font-size: clamp(2.5rem, 6vw, 5rem);
+      font-weight: 400;
+      color: var(--chai-cream);
+      letter-spacing: 0.04em;
+      line-height: 1.1;
+      margin-bottom: 1.25rem;
+    }
+
+    .page-header .hero-divider {
+      width: 50px;
+      height: 1px;
+      background: var(--chai-gold);
+      margin: 0 auto 1.5rem;
+      opacity: 0.5;
+    }
+
+    .page-header p {
+      font-family: 'Libre Baskerville', serif;
+      font-size: 0.88rem;
+      font-style: italic;
+      color: rgba(201, 149, 74, 0.8);
+      max-width: 520px;
+      margin: 0 auto;
+      line-height: 1.9;
+    }
+
+    /* PHILOSOPHY SECTION */
+    .section-philosophy {
+      max-width: 720px;
+      margin: 0 auto;
+      padding: 5rem 2rem;
+      text-align: center;
+    }
+
+    .section-label {
+      font-family: 'IM Fell English SC', serif;
+      font-size: 0.68rem;
+      letter-spacing: 0.35em;
+      color: var(--chai-accent);
+      margin-bottom: 1.5rem;
+    }
+
+    .section-philosophy h2 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(1.8rem, 4vw, 2.8rem);
+      font-weight: 300;
+      font-style: italic;
+      color: var(--chai-dark);
+      line-height: 1.3;
+      margin-bottom: 2rem;
+    }
+
+    .section-philosophy p {
+      font-family: 'Libre Baskerville', serif;
+      font-size: 0.88rem;
+      line-height: 2;
+      color: var(--chai-muted);
+      margin-bottom: 1.5rem;
+      text-align: left;
+    }
+
+    .philosophy-rule {
+      border: none;
+      border-top: 1px solid rgba(107, 76, 42, 0.15);
+      margin: 3rem 0;
+    }
+
+    /* PILLARS */
+    .section-pillars {
+      background: var(--chai-brown);
+      padding: 5rem 2rem;
+    }
+
+    .pillars-inner {
+      max-width: 900px;
+      margin: 0 auto;
+    }
+
+    .pillars-inner > .section-label {
+      font-family: 'IM Fell English SC', serif;
+      font-size: 0.68rem;
+      letter-spacing: 0.35em;
+      color: var(--chai-gold);
+      opacity: 0.8;
+      margin-bottom: 3rem;
+      text-align: center;
+      display: block;
+    }
+
+    .pillars-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 2rem;
+    }
+
+    .pillar {
+      text-align: center;
+      padding: 1.5rem;
+      border: 1px solid rgba(201, 149, 74, 0.15);
+    }
+
+    .pillar-number {
+      font-family: 'IM Fell English SC', serif;
+      font-size: 2rem;
+      color: var(--chai-gold);
+      opacity: 0.4;
+      line-height: 1;
+      margin-bottom: 1rem;
+    }
+
+    .pillar h3 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.3rem;
+      font-style: italic;
+      font-weight: 300;
+      color: var(--chai-cream);
+      margin-bottom: 0.75rem;
+    }
+
+    .pillar p {
+      font-family: 'Libre Baskerville', serif;
+      font-size: 0.78rem;
+      line-height: 1.9;
+      color: rgba(245, 234, 216, 0.55);
+      font-style: italic;
+    }
+
+    /* INVITED CLUBS */
+    .section-clubs {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 5rem 2rem;
+    }
+
+    .section-clubs > .section-label {
+      text-align: center;
+      margin-bottom: 3rem;
+    }
+
+    .clubs-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 1.5px;
+      background: rgba(107, 76, 42, 0.12);
+      border: 1px solid rgba(107, 76, 42, 0.12);
+    }
+
+    .club-card {
+      background: var(--chai-parchment);
+      padding: 2.5rem;
+    }
+
+    .club-city {
+      font-family: 'IM Fell English SC', serif;
+      font-size: 0.65rem;
+      letter-spacing: 0.3em;
+      color: var(--chai-accent);
+      opacity: 0.7;
+      margin-bottom: 0.5rem;
+    }
+
+    .club-card h3 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.4rem;
+      font-weight: 400;
+      color: var(--chai-dark);
+      margin-bottom: 0.6rem;
+      line-height: 1.3;
+    }
+
+    .club-card p {
+      font-family: 'Libre Baskerville', serif;
+      font-size: 0.78rem;
+      line-height: 1.85;
+      color: var(--chai-muted);
+      font-style: italic;
+    }
+
+    /* CTA */
+    .section-cta {
+      background: var(--chai-dark);
+      text-align: center;
+      padding: 5rem 2rem;
+    }
+
+    .section-cta .section-label {
+      font-family: 'IM Fell English SC', serif;
+      font-size: 0.68rem;
+      letter-spacing: 0.35em;
+      color: var(--chai-gold);
+      opacity: 0.7;
+      margin-bottom: 1.5rem;
+    }
+
+    .section-cta h2 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(1.8rem, 4vw, 3rem);
+      font-weight: 300;
+      font-style: italic;
+      color: var(--chai-cream);
+      margin-bottom: 1.25rem;
+    }
+
+    .section-cta p {
+      font-family: 'Libre Baskerville', serif;
+      font-size: 0.83rem;
+      font-style: italic;
+      color: rgba(245, 234, 216, 0.55);
+      max-width: 460px;
+      margin: 0 auto 2.5rem;
+      line-height: 1.9;
+    }
+
+    .pill-btn {
+      display: inline-block;
+      padding: 0.65rem 2.2rem;
+      border: 1px solid rgba(201, 149, 74, 0.5);
+      color: var(--chai-gold);
+      font-family: 'IM Fell English SC', serif;
+      font-size: 0.75rem;
+      letter-spacing: 0.12em;
+      text-decoration: none;
+      border-radius: 30px;
+      transition: background 0.25s, color 0.25s, border-color 0.25s;
+    }
+
+    .pill-btn:hover {
+      background: rgba(201, 149, 74, 0.12);
+      border-color: var(--chai-gold);
+      color: var(--chai-cream);
+    }
+
+    /* FOOTER */
+    footer {
+      background: var(--chai-dark);
+      border-top: 1px solid rgba(201, 149, 74, 0.1);
+      color: rgba(245, 234, 216, 0.35);
+      text-align: center;
+      padding: 2rem 1rem;
+      font-family: 'IM Fell English SC', serif;
+      font-size: 0.7rem;
+      letter-spacing: 0.12em;
+    }
+
+    /* RESPONSIVE */
+    @media (max-width: 640px) {
+      .pillars-grid { grid-template-columns: 1fr; }
+      .clubs-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav>
+    <div class="nav-inner">
+      <a href="index.html">The Chai Club</a>
+      <a href="symposiums.html" class="active">Symposiums</a>
+      <a href="dearsomebody.html">Dear Somebody</a>
+      <a href="reflections.html">Reflections</a>
+      <a href="fragments.html">Fragments</a>
+    </div>
+  </nav>
+
+  <!-- PAGE HEADER -->
+  <div class="page-header">
+    <div class="section-label">The Chai Club</div>
+    <h1>Symposiums</h1>
+    <div class="hero-divider"></div>
+    <p>Where conversation becomes its own kind of ceremony. A gathering of minds over something warm.</p>
+  </div>
+
+  <!-- PHILOSOPHY -->
+  <section class="section-philosophy">
+    <div class="section-label">The Idea</div>
+    <h2>Conversation as a lost art, reclaimed.</h2>
+    <p>Long before the lecture hall and the panel discussion, there was the symposium — not a formal event, but a gathering. People around a table, a fire, a pot of something steeping. Ideas passed between hands like bread. No agenda, no slides. Just the willingness to think out loud together.</p>
+    <p>At The Chai Club, a Symposium is that same thing, transported. It's a curated conversation — intimate, unhurried, and genuinely curious. The kind where someone says something that changes how you see a thing, and you walk home different than you arrived.</p>
+    <p>We believe the best ideas don't come from monologues. They emerge in the pauses, the disagreements, the moments when two thoughts collide and become something neither person had alone.</p>
+    <hr class="philosophy-rule">
+  </section>
+
+  <!-- PILLARS -->
+  <section class="section-pillars">
+    <div class="pillars-inner">
+      <span class="section-label">What a Symposium Is</span>
+      <div class="pillars-grid">
+        <div class="pillar">
+          <div class="pillar-number">I</div>
+          <h3>Unhurried</h3>
+          <p>No clock, no agenda. A Symposium moves at the pace of the people in it — slow enough to actually go somewhere.</p>
+        </div>
+        <div class="pillar">
+          <div class="pillar-number">II</div>
+          <h3>Curious</h3>
+          <p>The only requirement is genuine interest. In the topic, in each other, in being surprised by where the conversation leads.</p>
+        </div>
+        <div class="pillar">
+          <div class="pillar-number">III</div>
+          <h3>Intimate</h3>
+          <p>Small enough that everyone speaks. Big enough that the room feels alive. Always over something warm.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- INVITED CLUBS -->
+  <section class="section-clubs">
+    <div class="section-label">Invited Chai Clubs</div>
+    <div class="clubs-grid">
+      <div class="club-card">
+        <div class="club-city">New York</div>
+        <h3>The Lower East Side Circle</h3>
+        <p>A rotating gathering of writers, cooks, and wanderers who meet monthly to argue about everything and agree on very little.</p>
+      </div>
+      <div class="club-card">
+        <div class="club-city">London</div>
+        <h3>Brixton After Hours</h3>
+        <p>Born out of a bookshop that wouldn't close. They talk about music, memory, and what it means to belong somewhere.</p>
+      </div>
+      <div class="club-card">
+        <div class="club-city">Mumbai</div>
+        <h3>The Worli Collective</h3>
+        <p>Artists and architects who meet on rooftops. Their conversations tend to start with cities and end with childhood.</p>
+      </div>
+      <div class="club-card">
+        <div class="club-city">Toronto</div>
+        <h3>The Kensington Assembly</h3>
+        <p>A group that has been meeting since 2019, through everything. They make very good chai and even better questions.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section class="section-cta">
+    <div class="section-label">Want In?</div>
+    <h2>Bring your chai club to the table.</h2>
+    <p>If you host a gathering — however informal, however small — we'd love to hear about it. Symposiums are open to all invited clubs.</p>
+    <a href="mailto:hello@thechaiclub.org" class="pill-btn">Get in touch</a>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <p>&copy; 2025 The Chai Club &nbsp;·&nbsp; All rights reserved</p>
+  </footer>
+
+</body>
+</html>

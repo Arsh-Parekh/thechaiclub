@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Writings — The Chai Club</title>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Libre+Baskerville:ital@0;1&family=IM+Fell+English+SC&display=swap">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --chai-dark: #2b1f0e;
+      --chai-brown: #3c2a14;
+      --chai-mid: #6b4c2a;
+      --chai-gold: #c9954a;
+      --chai-cream: #f5ead8;
+      --chai-parchment: #fdf6ec;
+      --chai-text: #2b1f0e;
+      --chai-muted: #7a5c3a;
+      --chai-accent: #8b3a1e;
+    }
+
+    body {
+      font-family: 'Cormorant Garamond', Georgia, serif;
+      background: var(--chai-parchment);
+      color: var(--chai-text);
+      font-size: 18px;
+      line-height: 1.7;
+      overflow-x: hidden;
+    }
+
+    /* NAV */
+    nav {
+      background: var(--chai-dark);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+
+    .nav-inner {
+      max-width: 900px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0 1rem;
+      overflow-x: auto;
+    }
+
+    nav a {
+      font-family: 'IM Fell English SC', serif;
+      font-size: 0.78rem;
+      color: rgba(245, 234, 216, 0.6);
+      text-decoration: none;
+      padding: 1rem 1.4rem;
+      letter-spacing: 0.08em;
+      border-bottom: 2px solid transparent;
+      transition: color 0.2s, border-color 0.2s;
+      white-space: nowrap;
+    }
+
+    nav a:hover { color: var(--chai-gold); border-bottom-color: var(--chai-gold); }
+    nav a.active { color: var(--chai-gold); border-bottom-color: var(--chai-gold); }
+
+    /* PAGE HEADER */
+    .page-header {
+      background: var(--chai-dark);
+      text-align: center;
+      padding: 5rem 2rem 4rem;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .page-header::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(ellipse 70% 60% at 50% 100%, rgba(163, 99, 40, 0.3) 0%, transparent 70%);
+      pointer-events: none;
+    }
+
+    .page-header .section-label {
+      font-family: 'IM Fell English SC', serif;
+      font-size: 0.72rem;
+      letter-spacing: 0.4em;
+      color: var(--chai-gold);
+      opacity: 0.7;
+      margin-bottom: 1.5rem;
+    }
+
+    .page-header h1 {
+      font-family: 'IM Fell English SC', serif;
+      font-size: clamp(2.5rem, 6vw, 5rem);
+      font-weight: 400;
+      color: var(--chai-cream);
+      letter-spacing: 0.04em;
+      line-height: 1.1;
+      margin-bottom: 1.25rem;
+    }
+
+    .hero-divider {
+      width: 50px;
+      height: 1px;
+      background: var(--chai-gold);
+      margin: 0 auto 1.5rem;
+      opacity: 0.5;
+    }
+
+    .page-header p {
+      font-family: 'Libre Baskerville', serif;
+      font-size: 0.88rem;
+      font-style: italic;
+      color: rgba(201, 149, 74, 0.8);
+      max-width: 520px;
+      margin: 0 auto;
+      line-height: 1.9;
+    }
+
+    /* ARTICLE LIST */
+    .article-list {
+      max-width: 780px;
+      margin: 0 auto;
+      padding: 5rem 2rem;
+    }
+
+    .list-label {
+      font-family: 'IM Fell English SC', serif;
+      font-size: 0.68rem;
+      letter-spacing: 0.35em;
+      color: var(--chai-accent);
+      margin-bottom: 3.5rem;
+      text-align: center;
+      display: block;
+    }
+
+    .article-entry {
+      display: grid;
+      grid-template-columns: 80px 1fr;
+      gap: 0 2.5rem;
+      padding: 2.75rem 0;
+      border-top: 1px solid rgba(107, 76, 42, 0.15);
+      align-items: start;
+      text-decoration: none;
+      color: inherit;
+      transition: opacity 0.2s;
+    }
+
+    .article-entry:last-child {
+      border-bottom: 1px solid rgba(107, 76, 42, 0.15);
+    }
+
+    .article-entry:hover { opacity: 0.75; }
+
+    .article-meta {
+      text-align: right;
+      padding-top: 0.3rem;
+    }
+
+    .article-issue {
+      font-family: 'IM Fell English SC', serif;
+      font-size: 0.65rem;
+      letter-spacing: 0.2em;
+      color: var(--chai-gold);
+      opacity: 0.7;
+      display: block;
+      margin-bottom: 0.4rem;
+    }
+
+    .article-tag {
+      font-family: 'IM Fell English SC', serif;
+      font-size: 0.62rem;
+      letter-spacing: 0.15em;
+      color: var(--chai-accent);
+      opacity: 0.7;
+      display: block;
+    }
+
+    .article-content h2 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.6rem;
+      font-weight: 400;
+      line-height: 1.25;
+      color: var(--chai-dark);
+      margin-bottom: 0.75rem;
+    }
+
+    .article-content p {
+      font-family: 'Libre Baskerville', serif;
+      font-size: 0.82rem;
+      line-height: 1.9;
+      color: var(--chai-muted);
+      font-style: italic;
+      margin-bottom: 1rem;
+    }
+
+    .article-content .text-link {
+      font-family: 'IM Fell English SC', serif;
+      font-size: 0.7rem;
+      letter-spacing: 0.12em;
+      color: var(--chai-accent);
+      text-decoration: none;
+      border-bottom: 1px solid rgba(139, 58, 30, 0.3);
+      padding-bottom: 1px;
+    }
+
+    /* COMING SOON */
+    .article-entry.placeholder {
+      opacity: 0.35;
+      pointer-events: none;
+    }
+
+    .article-entry.placeholder .article-content h2 {
+      font-style: italic;
+      color: var(--chai-mid);
+    }
+
+    /* FOOTER */
+    footer {
+      background: var(--chai-dark);
+      border-top: 1px solid rgba(201, 149, 74, 0.1);
+      color: rgba(245, 234, 216, 0.35);
+      text-align: center;
+      padding: 2rem 1rem;
+      font-family: 'IM Fell English SC', serif;
+      font-size: 0.7rem;
+      letter-spacing: 0.12em;
+    }
+
+    @media (max-width: 540px) {
+      .article-entry {
+        grid-template-columns: 1fr;
+        gap: 0.75rem 0;
+      }
+      .article-meta { text-align: left; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav>
+    <div class="nav-inner">
+      <a href="index.html">The Chai Club</a>
+      <a href="writings.html" class="active">Writings</a>
+      <a href="symposiums.html">Symposiums</a>
+      <a href="dearsomebody.html">Dear Somebody</a>
+      <a href="fragments.html">Fragments</a>
+    </div>
+  </nav>
+
+  <!-- PAGE HEADER -->
+  <div class="page-header">
+    <div class="section-label">The Chai Club</div>
+    <h1>Writings</h1>
+    <div class="hero-divider"></div>
+    <p>Essays and articles that start with one thing and end up somewhere else entirely. Writing that thinks out loud.</p>
+  </div>
+
+  <!-- ARTICLE LIST -->
+  <section class="article-list">
+    <span class="list-label">All Pieces</span>
+
+    <a class="article-entry" href="article1.html">
+      <div class="article-meta">
+        <span class="article-issue">No. 01</span>
+        <span class="article-tag">Memory</span>
+      </div>
+      <div class="article-content">
+        <h2>The Tenderness of Collage: Collecting as a Political Gesture</h2>
+        <p>A reflection on collecting, archiving, and the intimacy of building memory through fragments. What we save says something about what we long for.</p>
+        <span class="text-link">Read →</span>
+      </div>
+    </a>
+
+    <a class="article-entry" href="article2.html">
+      <div class="article-meta">
+        <span class="article-issue">No. 02</span>
+        <span class="article-tag">Identity</span>
+      </div>
+      <div class="article-content">
+        <h2>Notes on Belonging: From Diaspora to Dinner Table</h2>
+        <p>Tracing how food rituals, smells, and kitchen stories help reconstruct identity across generations and oceans.</p>
+        <span class="text-link">Read →</span>
+      </div>
+    </a>
+
+    <div class="article-entry placeholder">
+      <div class="article-meta">
+        <span class="article-issue">No. 03</span>
+        <span class="article-tag">Coming soon</span>
+      </div>
+      <div class="article-content">
+        <h2>More to come.</h2>
+        <p>The archive is still being written.</p>
+      </div>
+    </div>
+
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <p>&copy; 2025 The Chai Club &nbsp;·&nbsp; All rights reserved</p>
+  </footer>
+
+</body>
+</html>

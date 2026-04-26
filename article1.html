@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Learning to Create Badly Again — The Chai Club</title>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Libre+Baskerville:ital@0;1&family=IM+Fell+English+SC&display=swap">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --chai-dark: #2b1f0e;
+      --chai-brown: #3c2a14;
+      --chai-mid: #6b4c2a;
+      --chai-gold: #c9954a;
+      --chai-cream: #f5ead8;
+      --chai-parchment: #fdf6ec;
+      --chai-text: #2b1f0e;
+      --chai-muted: #7a5c3a;
+      --chai-accent: #8b3a1e;
+    }
+
+    body {
+      font-family: 'Cormorant Garamond', Georgia, serif;
+      background: var(--chai-parchment);
+      color: var(--chai-text);
+      font-size: 18px;
+      line-height: 1.7;
+      overflow-x: hidden;
+    }
+
+    /* NAV */
+    nav {
+      background: var(--chai-dark);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+
+    .nav-inner {
+      max-width: 900px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0 1rem;
+      overflow-x: auto;
+    }
+
+    nav a {
+      font-family: 'IM Fell English SC', serif;
+      font-size: 0.78rem;
+      color: rgba(245, 234, 216, 0.6);
+      text-decoration: none;
+      padding: 1rem 1.4rem;
+      letter-spacing: 0.08em;
+      border-bottom: 2px solid transparent;
+      transition: color 0.2s, border-color 0.2s;
+      white-space: nowrap;
+    }
+
+    nav a:hover { color: var(--chai-gold); border-bottom-color: var(--chai-gold); }
+    nav a.active { color: var(--chai-gold); border-bottom-color: var(--chai-gold); }
+
+    /* ARTICLE HEADER */
+    .article-header {
+      background: var(--chai-dark);
+      text-align: center;
+      padding: 5rem 2rem 4rem;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .article-header::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(ellipse 70% 60% at 50% 100%, rgba(163, 99, 40, 0.3) 0%, transparent 70%);
+      pointer-events: none;
+    }
+
+    .article-label {
+      font-family: 'IM Fell English SC', serif;
+      font-size: 0.72rem;
+      letter-spacing: 0.4em;
+      color: var(--chai-gold);
+      opacity: 0.7;
+      margin-bottom: 1.5rem;
+    }
+
+    .article-header h1 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(2rem, 5vw, 4rem);
+      font-weight: 300;
+      font-style: italic;
+      color: var(--chai-cream);
+      line-height: 1.2;
+      max-width: 700px;
+      margin: 0 auto 1.25rem;
+    }
+
+    .hero-divider {
+      width: 50px;
+      height: 1px;
+      background: var(--chai-gold);
+      margin: 0 auto 1.5rem;
+      opacity: 0.5;
+    }
+
+    .article-subtitle {
+      font-family: 'Libre Baskerville', serif;
+      font-size: 0.88rem;
+      font-style: italic;
+      color: rgba(201, 149, 74, 0.75);
+      max-width: 500px;
+      margin: 0 auto 1.5rem;
+      line-height: 1.9;
+    }
+
+    .article-byline {
+      font-family: 'IM Fell English SC', serif;
+      font-size: 0.7rem;
+      letter-spacing: 0.2em;
+      color: rgba(245, 234, 216, 0.4);
+    }
+
+    /* ARTICLE BODY */
+    .article-body {
+      max-width: 660px;
+      margin: 0 auto;
+      padding: 5rem 2rem 6rem;
+    }
+
+    .article-body p {
+      font-family: 'Libre Baskerville', serif;
+      font-size: 0.95rem;
+      line-height: 2.1;
+      color: var(--chai-text);
+      margin-bottom: 2rem;
+    }
+
+    .article-body p:first-child::first-letter {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 4rem;
+      font-weight: 400;
+      float: left;
+      line-height: 0.75;
+      margin: 0.1em 0.1em 0 0;
+      color: var(--chai-accent);
+    }
+
+    /* BACK LINK */
+    .article-back {
+      max-width: 660px;
+      margin: 0 auto;
+      padding: 0 2rem 5rem;
+    }
+
+    .text-link {
+      font-family: 'IM Fell English SC', serif;
+      font-size: 0.7rem;
+      letter-spacing: 0.12em;
+      color: var(--chai-accent);
+      text-decoration: none;
+      border-bottom: 1px solid rgba(139, 58, 30, 0.3);
+      padding-bottom: 1px;
+      transition: border-color 0.2s;
+    }
+
+    .text-link:hover { border-bottom-color: var(--chai-accent); }
+
+    /* FOOTER */
+    footer {
+      background: var(--chai-dark);
+      border-top: 1px solid rgba(201, 149, 74, 0.1);
+      color: rgba(245, 234, 216, 0.35);
+      text-align: center;
+      padding: 2rem 1rem;
+      font-family: 'IM Fell English SC', serif;
+      font-size: 0.7rem;
+      letter-spacing: 0.12em;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav>
+    <div class="nav-inner">
+      <a href="index.html">The Chai Club</a>
+      <a href="writings.html" class="active">Writings</a>
+      <a href="symposiums.html">Symposiums</a>
+      <a href="dearsomebody.html">Dear Somebody</a>
+      <a href="fragments.html">Fragments</a>
+    </div>
+  </nav>
+
+  <!-- ARTICLE HEADER -->
+  <div class="article-header">
+    <div class="article-label">Writings &nbsp;·&nbsp; No. 01</div>
+    <h1>Learning to Create Badly Again</h1>
+    <div class="hero-divider"></div>
+    <p class="article-subtitle">Why growing up often means learning to create badly again</p>
+    <div class="article-byline">By NP &nbsp;·&nbsp; March 2026</div>
+  </div>
+
+  <!-- ARTICLE BODY -->
+  <article class="article-body">
+    <p>I'm terrible at art, and I've always known it. Even as a kid in primary school, I remember creating "masterpieces" that were more visually unappealing than stick figures that my two-year-old brother could have drawn. I remember trying so hard to use watercolour, and seeing all my beautiful colours slowly turn into an earthy slop of brown. The more I tried to fix it, the more my paper would peel and dissolve, until I was finally left with wet tissues, dirty brushes, and shreds of paper. When I looked around, I saw my classmates' beautiful paintings of houses or trees or castles. Perhaps I should've been embarrassed or should've concluded that art wasn't my cup of tea. But I wasn't embarrassed, and I didn't care. I kept painting and I kept drawing and I kept creating because it was fun.</p>
+
+    <p>But the self-consciousness did come.</p>
+
+    <p>As I moved into middle school, I started to be more aware of how I compared to others. I realised that no matter how hard I tried, whatever I produced artistically just wasn't visually appealing or engaging. My form improved, but I was still producing work that nobody — apart from my grandmother — would want to look at. Perhaps the worst part of our world's capitalist philosophy is that we are trained to think that if we cannot create a good output, there is no point in creating at all, and I started to internalise that sentiment. I was embarrassed to put in the effort when I knew that the outputs of my efforts were not of much value. If you try so hard and you still cannot produce anything beautiful, maybe you just should accept that you're not cut out for it? Others had this natural talent whilst I didn't have an artistic bone in my body. I just accepted that as a fact.</p>
+
+    <p>And not just in art, but in life. My self-consciousness expanded far beyond visual art. I gave up playing the violin — after all, no matter how many years I had played the instrument for, I still couldn't sound anywhere near as good as my peers did. I just wasn't built to be a musician! When I was younger, I wanted to be an actor. I loved participating in all the school plays and theatre used to be my favourite class. But as I grew into my teenage years, I suddenly could not act anymore. I became hyper-aware of my body and the way I was perceived. I cringed whenever I would try to perform and I felt like my entire body had been hijacked by self-consciousness. I couldn't speak, move or dance without doubting myself.</p>
+
+    <p>In the sea of worrying about others, I lost so much of myself. As I became cognisant of how I was perceived by others, I subconsciously started to place limitations on myself. I didn't want to be seen as trying too hard, or being too cringey, or too awkward, or too camp. Ultimately, I gave up so many of the things I loved because I simply felt embarrassed to do them imperfectly.</p>
+
+    <p>The irony, which I only now realise as someone older and in college, is that in the process of trying to avoid my own judgement I became such a hollow version of myself. I became someone who chose to not pursue passions or to not try just because I was scared of not being perfect. I believe that so much of our 20s are spent trying to unlearn what we learnt in our teens. So much of our life is spent trying to go back to our childhood selves and attempting to rediscover our innocent and pure sense of joy.</p>
+
+    <p>This is why I have now restarted playing the violin, restarted painting, and have started writing. It doesn't matter that I'm not going to be a professional violinist or a master painter, because that's not the point. Art is about finding a way to express our voice in a world that continuously tries to suppress it. For me, it's a way to fight against all of that self-consciousness that I developed in my teens. That is why I have started to write, because through my writing I am finding a way to reflect and to express myself. A way that feels intimate, raw, and private, but also allows me to present myself to the world in my most authentic form.</p>
+  </article>
+
+  <!-- BACK LINK -->
+  <div class="article-back">
+    <a class="text-link" href="writings.html">← Back to Writings</a>
+  </div>
+
+  <!-- FOOTER -->
+  <footer>
+    <p>&copy; 2025 The Chai Club &nbsp;·&nbsp; All rights reserved</p>
+  </footer>
+
+</body>
+</html>

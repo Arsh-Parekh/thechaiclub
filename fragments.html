@@ -1,0 +1,477 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Fragments — The Chai Club</title>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Libre+Baskerville:ital@0;1&family=IM+Fell+English+SC&display=swap">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --chai-dark: #2b1f0e;
+      --chai-brown: #3c2a14;
+      --chai-mid: #6b4c2a;
+      --chai-gold: #c9954a;
+      --chai-cream: #f5ead8;
+      --chai-parchment: #fdf6ec;
+      --chai-text: #2b1f0e;
+      --chai-muted: #7a5c3a;
+      --chai-accent: #8b3a1e;
+    }
+
+    body {
+      font-family: 'Cormorant Garamond', Georgia, serif;
+      background: var(--chai-dark);
+      color: var(--chai-cream);
+      font-size: 18px;
+      line-height: 1.7;
+      overflow-x: hidden;
+    }
+
+    nav {
+      background: rgba(43, 31, 14, 0.95);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      backdrop-filter: blur(8px);
+    }
+
+    .nav-inner {
+      max-width: 900px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0 1rem;
+      overflow-x: auto;
+    }
+
+    nav a {
+      font-family: 'IM Fell English SC', serif;
+      font-size: 0.78rem;
+      color: rgba(245, 234, 216, 0.6);
+      text-decoration: none;
+      padding: 1rem 1.4rem;
+      letter-spacing: 0.08em;
+      border-bottom: 2px solid transparent;
+      transition: color 0.2s, border-color 0.2s;
+      white-space: nowrap;
+    }
+
+    nav a:hover { color: var(--chai-gold); border-bottom-color: var(--chai-gold); }
+    nav a.active { color: var(--chai-gold); border-bottom-color: var(--chai-gold); }
+
+    .page-header {
+      text-align: center;
+      padding: 6rem 2rem 4rem;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .page-header::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(ellipse 70% 60% at 50% 100%, rgba(163, 99, 40, 0.25) 0%, transparent 70%);
+      pointer-events: none;
+    }
+
+    .section-label {
+      font-family: 'IM Fell English SC', serif;
+      font-size: 0.72rem;
+      letter-spacing: 0.4em;
+      color: var(--chai-gold);
+      opacity: 0.7;
+      margin-bottom: 1.5rem;
+    }
+
+    .page-header h1 {
+      font-family: 'IM Fell English SC', serif;
+      font-size: clamp(3rem, 8vw, 7rem);
+      font-weight: 400;
+      color: var(--chai-cream);
+      letter-spacing: 0.06em;
+      line-height: 1.0;
+      margin-bottom: 1.25rem;
+    }
+
+    .hero-divider {
+      width: 50px;
+      height: 1px;
+      background: var(--chai-gold);
+      margin: 0 auto 1.5rem;
+      opacity: 0.5;
+    }
+
+    .page-header p {
+      font-family: 'Libre Baskerville', serif;
+      font-size: 0.85rem;
+      font-style: italic;
+      color: rgba(201, 149, 74, 0.7);
+      max-width: 480px;
+      margin: 0 auto;
+      line-height: 1.9;
+    }
+
+    .collage {
+      padding: 4rem 1.5rem 6rem;
+      max-width: 1100px;
+      margin: 0 auto;
+      columns: 3;
+      column-gap: 1rem;
+    }
+
+    .fragment {
+      break-inside: avoid;
+      margin-bottom: 1rem;
+      display: block;
+      overflow: hidden;
+    }
+
+    .frag-label {
+      font-family: 'IM Fell English SC', serif;
+      font-size: 0.6rem;
+      letter-spacing: 0.3em;
+      opacity: 0.6;
+      margin-bottom: 0.75rem;
+      display: block;
+    }
+
+    .fragment.image { line-height: 0; }
+
+    .fragment.image img {
+      width: 100%;
+      display: block;
+      filter: sepia(20%) contrast(92%) brightness(0.88);
+      transition: filter 0.4s, transform 0.5s;
+    }
+
+    .fragment.image:hover img {
+      filter: sepia(0%) contrast(100%) brightness(1);
+      transform: scale(1.03);
+    }
+
+    .fragment.image .img-caption {
+      padding: 0.5rem 0.75rem;
+      font-family: 'IM Fell English SC', serif;
+      font-size: 0.6rem;
+      letter-spacing: 0.2em;
+      color: rgba(245, 234, 216, 0.3);
+      background: #180f05;
+      line-height: 1.5;
+    }
+
+    .fragment.big-quote {
+      padding: 2.5rem 1.75rem;
+      text-align: center;
+      background: var(--chai-brown);
+      border-top: 1px solid rgba(201, 149, 74, 0.2);
+      border-bottom: 1px solid rgba(201, 149, 74, 0.2);
+    }
+
+    .fragment.big-quote .quote-mark {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 4rem;
+      line-height: 0.5;
+      color: var(--chai-gold);
+      opacity: 0.25;
+      display: block;
+      margin-bottom: 1rem;
+    }
+
+    .fragment.big-quote p {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.35rem;
+      font-style: italic;
+      font-weight: 300;
+      line-height: 1.6;
+      color: var(--chai-cream);
+    }
+
+    .fragment.big-quote cite {
+      display: block;
+      margin-top: 1rem;
+      font-family: 'IM Fell English SC', serif;
+      font-size: 0.6rem;
+      letter-spacing: 0.25em;
+      color: var(--chai-gold);
+      opacity: 0.55;
+      font-style: normal;
+    }
+
+    .fragment.thought {
+      padding: 1.75rem;
+      border-left: 2px solid var(--chai-gold);
+      background: rgba(60, 42, 20, 0.6);
+    }
+
+    .fragment.thought .frag-label { color: var(--chai-gold); }
+
+    .fragment.thought p {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.1rem;
+      font-style: italic;
+      line-height: 1.75;
+      color: rgba(245, 234, 216, 0.85);
+    }
+
+    .fragment.overheard {
+      padding: 1.5rem;
+      border: 1px solid rgba(201, 149, 74, 0.12);
+      background: rgba(245, 234, 216, 0.03);
+    }
+
+    .fragment.overheard .frag-label { color: var(--chai-accent); }
+
+    .fragment.overheard p {
+      font-family: 'Libre Baskerville', serif;
+      font-size: 0.82rem;
+      font-style: italic;
+      line-height: 1.9;
+      color: rgba(245, 234, 216, 0.55);
+    }
+
+    .fragment.large-text {
+      padding: 3rem 1.5rem;
+      text-align: center;
+    }
+
+    .fragment.large-text p {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 2.2rem;
+      font-weight: 300;
+      font-style: italic;
+      line-height: 1.2;
+      color: rgba(201, 149, 74, 0.4);
+    }
+
+    .fragment.note {
+      padding: 1.5rem;
+      background: var(--chai-parchment);
+    }
+
+    .fragment.note .frag-label { color: var(--chai-accent); }
+
+    .fragment.note p {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1rem;
+      font-style: italic;
+      line-height: 1.8;
+      color: var(--chai-text);
+    }
+
+    .fragment.dark-note {
+      padding: 2rem 1.75rem;
+      background: #180f05;
+    }
+
+    .fragment.dark-note .frag-label { color: var(--chai-gold); }
+
+    .fragment.dark-note p {
+      font-family: 'Libre Baskerville', serif;
+      font-size: 0.82rem;
+      font-style: italic;
+      line-height: 1.95;
+      color: rgba(245, 234, 216, 0.45);
+    }
+
+    .section-contribute {
+      background: var(--chai-brown);
+      text-align: center;
+      padding: 5rem 2rem;
+      border-top: 1px solid rgba(201, 149, 74, 0.15);
+    }
+
+    .section-contribute .section-label { margin-bottom: 1.5rem; }
+
+    .section-contribute h2 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(1.8rem, 4vw, 3rem);
+      font-weight: 300;
+      font-style: italic;
+      color: var(--chai-cream);
+      margin-bottom: 1.25rem;
+    }
+
+    .section-contribute p {
+      font-family: 'Libre Baskerville', serif;
+      font-size: 0.83rem;
+      font-style: italic;
+      color: rgba(245, 234, 216, 0.5);
+      max-width: 460px;
+      margin: 0 auto 2.5rem;
+      line-height: 1.9;
+    }
+
+    .pill-btn {
+      display: inline-block;
+      padding: 0.65rem 2.2rem;
+      border: 1px solid rgba(201, 149, 74, 0.5);
+      color: var(--chai-gold);
+      font-family: 'IM Fell English SC', serif;
+      font-size: 0.75rem;
+      letter-spacing: 0.12em;
+      text-decoration: none;
+      border-radius: 30px;
+      transition: background 0.25s, color 0.25s, border-color 0.25s;
+    }
+
+    .pill-btn:hover {
+      background: rgba(201, 149, 74, 0.12);
+      border-color: var(--chai-gold);
+      color: var(--chai-cream);
+    }
+
+    footer {
+      background: var(--chai-dark);
+      border-top: 1px solid rgba(201, 149, 74, 0.1);
+      color: rgba(245, 234, 216, 0.3);
+      text-align: center;
+      padding: 2rem 1rem;
+      font-family: 'IM Fell English SC', serif;
+      font-size: 0.7rem;
+      letter-spacing: 0.12em;
+    }
+
+    @media (max-width: 768px) { .collage { columns: 2; } }
+    @media (max-width: 480px) { .collage { columns: 1; } }
+  </style>
+</head>
+<body>
+
+  <nav>
+    <div class="nav-inner">
+      <a href="index.html">The Chai Club</a>
+      <a href="writings.html">Writings</a>
+      <a href="symposiums.html">Symposiums</a>
+      <a href="dearsomebody.html">Dear Somebody</a>
+      <a href="fragments.html" class="active">Fragments</a>
+    </div>
+  </nav>
+
+  <div class="page-header">
+    <div class="section-label">The Chai Club</div>
+    <h1>Fragments</h1>
+    <div class="hero-divider"></div>
+    <p>Thoughts half-finished. Things overheard. Images that stayed. A collage of everything that doesn't fit anywhere else.</p>
+  </div>
+
+  <section class="collage">
+
+    <div class="fragment image">
+      <img src="https://images.unsplash.com/photo-1544787219-7f47ccb76574?w=600&q=80" alt="Warm tea cup">
+      <div class="img-caption">Something warm, always</div>
+    </div>
+
+    <div class="fragment big-quote">
+      <span class="quote-mark">"</span>
+      <p>We are all just walking each other home.</p>
+      <cite>— Ram Dass</cite>
+    </div>
+
+    <div class="fragment thought">
+      <span class="frag-label">Thought</span>
+      <p>There is something about the way chai smells in winter that makes you feel like you belong somewhere, even if you can't say where.</p>
+    </div>
+
+    <div class="fragment image">
+      <img src="https://images.unsplash.com/photo-1474932430478-367dbb6832c1?w=600&q=80" alt="Open book warm light">
+      <div class="img-caption">Every book is a door left ajar</div>
+    </div>
+
+    <div class="fragment overheard">
+      <span class="frag-label">Overheard</span>
+      <p>"She said she didn't want to be remembered. She just wanted to be known."</p>
+    </div>
+
+    <div class="fragment large-text">
+      <p>begin badly.</p>
+    </div>
+
+    <div class="fragment dark-note">
+      <span class="frag-label">Fragment</span>
+      <p>I keep old receipts. Not because I'm sentimental about money, but because they prove I was somewhere — doing something — on an ordinary Tuesday.</p>
+    </div>
+
+    <div class="fragment image">
+      <img src="https://images.unsplash.com/photo-1529156069898-49953e39b3ac?w=600&q=80" alt="Friends gathered around table">
+      <div class="img-caption">The best conversations happen by accident</div>
+    </div>
+
+    <div class="fragment note">
+      <span class="frag-label">Note to self</span>
+      <p>Stop waiting until you're good enough to begin. Begin so that you become good enough.</p>
+    </div>
+
+    <div class="fragment big-quote">
+      <span class="quote-mark">"</span>
+      <p>The present moment always will have been.</p>
+      <cite>— Unknown</cite>
+    </div>
+
+    <div class="fragment thought">
+      <span class="frag-label">Thought</span>
+      <p>Belonging is not a place. It is the moment someone says your name like something they've been waiting to say.</p>
+    </div>
+
+    <div class="fragment image">
+      <img src="https://images.unsplash.com/photo-1455390582262-044cdead277a?w=600&q=80" alt="Writing journaling hands">
+      <div class="img-caption">Writing is thinking out loud on paper</div>
+    </div>
+
+    <div class="fragment overheard">
+      <span class="frag-label">Overheard</span>
+      <p>"He laughed like he meant it. You don't see that anymore."</p>
+    </div>
+
+    <div class="fragment dark-note">
+      <span class="frag-label">Fragment</span>
+      <p>My grandmother never threw anything away. I used to think it was clutter. Now I understand — she was building an archive of proof that her life had texture.</p>
+    </div>
+
+    <div class="fragment image">
+      <img src="https://images.unsplash.com/photo-1504674900247-0877df9cc836?w=600&q=80" alt="Food table gathering">
+      <div class="img-caption">The table is never just about the food</div>
+    </div>
+
+    <div class="fragment large-text">
+      <p>stay a little longer.</p>
+    </div>
+
+    <div class="fragment note">
+      <span class="frag-label">Overheard</span>
+      <p>"I don't miss the place. I miss who I was when I was there."</p>
+    </div>
+
+    <div class="fragment big-quote">
+      <span class="quote-mark">"</span>
+      <p>Not all those who wander are lost.</p>
+      <cite>— J.R.R. Tolkien</cite>
+    </div>
+
+    <div class="fragment image">
+      <img src="https://images.unsplash.com/photo-1477959858617-67f85cf4f1df?w=600&q=80" alt="City lights at night">
+      <div class="img-caption">Cities remember even when we forget</div>
+    </div>
+
+    <div class="fragment thought">
+      <span class="frag-label">Thought</span>
+      <p>Art is not about producing something beautiful. It's about proving you were here, and that you felt things.</p>
+    </div>
+
+  </section>
+
+  <section class="section-contribute">
+    <div class="section-label">Add to the Collage</div>
+    <h2>Send us a fragment.</h2>
+    <p>A thought, a quote, something overheard, a photo, a line you can't get out of your head. Fragments belong to everyone.</p>
+    <a href="mailto:hello@thechaiclub.org" class="pill-btn">Submit a fragment</a>
+  </section>
+
+  <footer>
+    <p>&copy; 2025 The Chai Club &nbsp;·&nbsp; All rights reserved</p>
+  </footer>
+
+</body>
+</html>

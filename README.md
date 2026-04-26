@@ -1,1 +1,1 @@
-# weightofthings.org
+# thechaiclub.org
